@@ -1,0 +1,29 @@
+{
+  "presets": [
+    "es2015",
+    "stage-0",
+    "react"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ],
+  "env": {
+    "development": {
+      "plugins": [
+        "transform-runtime",
+        "react-hot-loader/babel"
+      ]
+    },
+    "production": {
+      "presets": [
+        [
+          "es2015", {
+            "modules": false
+          }
+        ],
+        "stage-0",
+        "react"
+      ]
+    }
+  }
+}
