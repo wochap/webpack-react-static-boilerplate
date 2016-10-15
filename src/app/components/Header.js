@@ -21,6 +21,9 @@ class Root extends Component {
       <header>
         <nav>
           <ul>
+            <li>
+              <Link to='/'>Home</Link>
+            </li>
             {links}
           </ul>
         </nav>
