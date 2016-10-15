@@ -1,20 +1,21 @@
-var fs = require('fs')
-var path = require('path')
+import fs from 'fs'
+import path from 'path'
 
 import {projectRootPath} from './config'
+
 // get all post markdown files
-var postsFiles = fs.readdirSync(path.join(projectRootPath, 'src/posts'))
-
-// get all
-var postsRoutes = postsFiles.map(function (path) {
+const postsFiles = fs.readdirSync(path.join(projectRootPath, 'src/posts'))
+// create posts routes
+const postsRoutes = postsFiles.map(function (path) {
   // extract file name from path file
-  var fileName = (path.split('/').pop().split('.'))[0]
+  let fileName = (path.split('/').pop().split('.'))[0]
 
-  return '/posts/' + fileName
+  return `/posts/${fileName}`
 })
 
-// exports routes that static-site-generator-webpack-plugin will use to compile
-module.exports = [
+// exports routes that static-site-generator-webpack-plugin will use
+export default [
   '/',
-  '/404'
-].concat(postsRoutes)
+  '/404',
+  ...postsRoutes
+]
