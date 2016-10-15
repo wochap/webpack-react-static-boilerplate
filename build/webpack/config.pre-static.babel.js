@@ -3,10 +3,10 @@ import webpackMerge from 'webpack-merge'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import path from 'path'
 
-import baseWebpackConfig from './config.base.babel'
+import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
 
-export default webpackMerge(baseWebpackConfig, {
+export default webpackMerge(webpackConfigBase, {
   // necessary for 'static-site-generator-webpack-plugin' works when split
   target: 'node',
   devtool: 'eval',

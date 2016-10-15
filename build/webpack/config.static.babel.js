@@ -4,7 +4,7 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import path from 'path'
 import chalk from 'chalk'
 
-import baseWebpackConfig from './config.base.babel'
+import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
 
 // static things
@@ -12,7 +12,7 @@ import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
 import routes from '../routes'
 console.log(chalk.yellow('Routes to build: \n'), routes, '\n')
 
-export default webpackMerge(baseWebpackConfig, {
+export default webpackMerge(webpackConfigBase, {
   // necessary for 'static-site-generator-webpack-plugin' works when split
   target: 'node',
   devtool: 'eval',

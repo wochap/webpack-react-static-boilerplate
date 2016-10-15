@@ -5,23 +5,22 @@ process.env.NODE_ENV = 'production'
 import webpack from 'webpack'
 import ora from 'ora'
 import path from 'path'
-import {rm, mkdir} from 'shelljs'
+import shelljs from 'shelljs'
 
-import prodWebpackConfig from './webpack/config.prod.babel'
-import preStaticWebpackConfig from './webpack/config.pre-static.babel'
-import staticWebpackConfig from './webpack/config.static.babel'
+import webpackConfigPro from './webpack/config.prod.babel'
+import webpackConfigPreStatic from './webpack/config.pre-static.babel'
+import webpackConfigStatic from './webpack/config.static.babel'
 
 import {projectRootPath} from './config'
 
 let spinner = ora('Building for production...')
-
 spinner.start()
 
 const distFolderPath = path.join(projectRootPath, 'dist')
-rm('-rf', distFolderPath)
-mkdir('-p', distFolderPath)
+shelljs.rm('-rf', distFolderPath)
+shelljs.mkdir('-p', distFolderPath)
 
-webpack(preStaticWebpackConfig).run((err, stats) => {
+webpack(webpackConfigPreStatic).run((err, stats) => {
   if (err) throw err
 
   process.stdout.write(stats.toString({
@@ -32,7 +31,7 @@ webpack(preStaticWebpackConfig).run((err, stats) => {
     chunkModules: false
   }) + '\n')
 
-  webpack(staticWebpackConfig).run((err, stats) => {
+  webpack(webpackConfigStatic).run((err, stats) => {
     if (err) throw err
 
     process.stdout.write(stats.toString({
@@ -43,7 +42,7 @@ webpack(preStaticWebpackConfig).run((err, stats) => {
       chunkModules: false
     }) + '\n')
 
-    webpack(prodWebpackConfig).run((err, stats) => {
+    webpack(webpackConfigPro).run((err, stats) => {
       spinner.stop()
 
       if (err) throw err
@@ -56,8 +55,8 @@ webpack(preStaticWebpackConfig).run((err, stats) => {
         chunkModules: false
       }) + '\n')
 
-      rm('-rf', path.join(distFolderPath, 'dist'))
-      rm('-rf', path.join(distFolderPath, '_static'))
+      shelljs.rm('-rf', path.join(distFolderPath, 'dist'))
+      shelljs.rm('-rf', path.join(distFolderPath, '_static'))
     })
   })
 })

@@ -3,10 +3,10 @@ import webpackMerge from 'webpack-merge'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import path from 'path'
 
-import baseWebpackConfig from './config.base.babel'
+import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
 
-export default webpackMerge(baseWebpackConfig, {
+export default webpackMerge(webpackConfigBase, {
   devtool: 'source-map',
   entry: {
     app: path.join(projectRootPath, 'src/app/client-entry.js')
