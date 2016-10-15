@@ -1,6 +1,6 @@
-import loadPostHtml from 'app/utils/loadPostHtml'
-
 import React, {Component} from 'react'
+
+import asyncLoadPost from 'app/utils/asyncLoadPost'
 
 class PostScreen extends Component {
   static propTypes = {
@@ -15,20 +15,16 @@ class PostScreen extends Component {
 
   componentWillMount () {
     let postSlug = this.props.params.slug
-
-    loadPostHtml(postSlug, (post) => {
-      this.setState({
-        body: {
-          __html: post.body
-        }
-      })
-    })
+    this.fetchPost(postSlug)
   }
 
   componentWillReceiveProps (nextProps) {
     let postSlug = nextProps.params.slug
+    this.fetchPost(postSlug)
+  }
 
-    loadPostHtml(postSlug, (post) => {
+  fetchPost = (postSlug) => {
+    asyncLoadPost(postSlug, (post) => {
       this.setState({
         body: {
           __html: post.body
