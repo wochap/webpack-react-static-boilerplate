@@ -14,7 +14,7 @@ export default function (locals, callback) {
 
   match({routes, location}, (error, redirectLocation, renderProps) => {
     if (error) {
-      console.log('react-match ERROR: ', error)
+      console.error('react-match ERROR: ', error)
       return
     }
 
@@ -24,15 +24,17 @@ export default function (locals, callback) {
 
     callback(null, `
       <!DOCTYPE html>
-      <html lang="en">
+      <html>
         <head>
           <meta charset="utf-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <title>Gean Marroquin</title>
+          <title>{{ name }}</title>
           <link rel="stylesheet" href="/static/css/app.css" />
         </head>
         <body>
-          ${html}
+          <div id="root">
+            ${html}
+          </div>
           <script src="/static/js/vendor.js"></script>
           <script src="/static/js/app.js"></script>
         </body>

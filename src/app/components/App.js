@@ -9,7 +9,7 @@ class App extends Component {
 
   render () {
     return (
-      <div id="root">
+      <div>
         <h1>App</h1>
         <Header></Header>
         {this.props.children}
