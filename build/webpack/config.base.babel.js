@@ -21,7 +21,8 @@ export default {
   resolveLoader: {
     // register custom marked + highlight.js + front-matter loader
     alias: {
-      'post-loader': path.resolve(__dirname, './custom-loaders/post-loader')
+      'post-loader': path.resolve(__dirname, './custom-loaders/post-loader'),
+      'front-matter-loader': path.resolve(__dirname, './custom-loaders/front-matter-loader')
     }
   },
   module: {
@@ -60,7 +61,7 @@ export default {
           name: '[name].ico'
         }
       },
-      // here we split posts in chunks
+      // here we split posts in n chunks
       {
         test: /\.md$/,
         loaders: ['bundle-loader?lazy', 'post-loader']
