@@ -4,12 +4,17 @@
 
 ## Features
 
-* [HMR](https://webpack.github.io/docs/hot-module-replacement.html)
+* [react](https://facebook.github.io/react/) + [react-router](https://react-router.now.sh/)
+* [react-hot-loader v3](https://github.com/gaearon/react-hot-loader)
 * [ESLint](http://eslint.org/)
-* [ES2015](https://babeljs.io/docs/plugins/preset-es2015/)
+* [Babel stage-0](https://babeljs.io/docs/plugins/preset-stage-0/)
 * [SASS](http://sass-lang.com/)
 * [PostCSS](https://github.com/postcss/postcss)
 * [BrowserSync](https://www.browsersync.io/)
+
+## Troubleshooting
+
+* On each HMR react-router logs a error, this boilerplate uses  [react-hot-loader v3](https://github.com/gaearon/react-hot-boilerplate/blob/next/src/App.js#L8) (currently in beta)
 
 ## Development
 
