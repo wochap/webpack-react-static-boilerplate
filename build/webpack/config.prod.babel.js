@@ -39,7 +39,8 @@ export default webpackMerge(webpackConfigBase, {
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
-      }
+      },
+      comments: false
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
