@@ -1,43 +1,43 @@
-import React, {Component} from 'react'
+import React, {Component, PropTypes} from 'react'
 
 import asyncLoadPost from 'app/utils/asyncLoadPost'
 
+import Post from './Post'
+
 class PostScreen extends Component {
   static propTypes = {
-    params: React.PropTypes.object.isRequired
+    params: PropTypes.object.isRequired
   }
 
   state = {
-    body: {
-      __html: null
-    }
+    post: null
   }
 
   componentWillMount () {
     let postSlug = this.props.params.slug
-    this.fetchPost(postSlug)
+    if (window.INITIAL_POST && window.INITIAL_POST.frontmatter.slug === postSlug) {
+      this.setState({post: window.INITIAL_POST})
+    } else {
+      this.getPost(postSlug)
+    }
   }
 
   componentWillReceiveProps (nextProps) {
     let postSlug = nextProps.params.slug
-    this.fetchPost(postSlug)
+    this.setState({post: null})
+    this.getPost(postSlug)
   }
 
-  fetchPost = (postSlug) => {
+  getPost = (postSlug) => {
     asyncLoadPost(postSlug, (post) => {
-      this.setState({
-        body: {
-          __html: post.body
-        }
-      })
+      this.setState({post})
     })
   }
 
   render () {
     return (
       <div>
-        <h2>PostScreen</h2>
-        <div dangerouslySetInnerHTML={this.state.body}></div>
+        <Post post={this.state.post}></Post>
       </div>
     )
   }
