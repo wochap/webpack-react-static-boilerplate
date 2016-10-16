@@ -1,3 +1,5 @@
+import objectAssign from 'object-assign'
+
 const postsContext = require.context('!!front-matter-loader!src/posts', true, /\.md$/)
 
 const posts = postsContext.keys().map(function (path) {
@@ -5,11 +7,10 @@ const posts = postsContext.keys().map(function (path) {
   let fileName = (path.split('/').pop().split('.'))[0]
   let frontMatter = postsContext(`./${fileName}.md`)
 
-  return {
+  return objectAssign({}, {
     slug: fileName,
-    title: fileName.replace(/-/g, ' '),
-    ...frontMatter
-  }
+    title: fileName.replace(/-/g, ' ')
+  }, frontMatter)
 })
 
 export default posts
