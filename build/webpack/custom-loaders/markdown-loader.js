@@ -36,8 +36,17 @@ module.exports = function(source) {
 
   var meta = frontMatter(source);
   var body = marked(meta.body, options);
-  var result = objectAssign({}, meta.attributes, {
-    body: body
+  var result = objectAssign({
+    frontmatter: {
+      title: null,
+      tags: null,
+      date: null
+    },
+    bodyHTML: null
+  }, {
+    frontmatter: meta.attributes
+  }, {
+    bodyHTML: body
   });
 
   return 'module.exports = ' + JSON.stringify(result)
