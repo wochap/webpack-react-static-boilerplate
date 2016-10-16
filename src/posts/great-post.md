@@ -3,20 +3,15 @@ title: Great post
 date: 2016-09-01
 ---
 
-# Great post
-
-asdasd
-sadsd
-
-sdsd
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```js
-var a = 'yeahh'
+var a = 'yeahh';
 
-console.log('yeahh')
+console.log(a);
 ```
 
-<div>asdsa<div>
+<div>testing<div>
 <script>
-window.alert('dsad')
+  window.alert('OwO');  
 </script>
