@@ -22,7 +22,7 @@ export default webpackMerge(webpackConfigBase, {
   output: {
     publicPath: '/',
     filename: 'dist/_static/js/[name].js',
-    chunkFilename: 'dist/_static/js/chunk.[id].js',
+    chunkFilename: 'dist/_static/js/chunk.[name].js',
     // necessary for 'static-site-generator-webpack-plugin' works
     libraryTarget: 'commonjs2'
   },
