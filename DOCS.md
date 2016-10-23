@@ -29,3 +29,23 @@ This boilerplate assumes you are somewhat familiar with Webpack.
 └── build/                    # build tools (webpack)
     └── ...
 ```
+
+## How it works?
+
+This boilerplate uses `react` and `react-router`, `react-hot-loader` for HMR with `react`, the posts are loaded by custom loaders:
+
+* bundle-loader: it will create split points for each post.
+* markdown-loader: it will parse the post with [marked](https://www.npmjs.com/package/marked) + [highlight.js](https://www.npmjs.com/package/highlight.js) and [front-matter](https://www.npmjs.com/package/front-matter)
+
+In production the `react` app will be rendered by [static-site-generator-webpack-plugin](https://github.com/markdalgleish/static-site-generator-webpack-plugin), the routes to be rendered are in `build/routes.js`.
+
+## Setup routes
+
+Update the following files:
+
+* `build/routes.js`
+
+## Troubleshooting
+
+* On each HMR react-router logs a error, this boilerplate uses  [react-hot-loader v3](https://github.com/gaearon/react-hot-boilerplate/blob/next/src/App.js#L8) (currently in beta)
+* When you delete a post file, you must restart the dev-server or do a change.
