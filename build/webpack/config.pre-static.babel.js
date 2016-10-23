@@ -16,7 +16,7 @@ export default webpackMerge(webpackConfigBase, {
   output: {
     publicPath: '/',
     filename: '_static/js/[name].js',
-    chunkFilename: '_static/js/chunk.[name].js',
+    chunkFilename: '_static/js/chunk.[id].[name].js',
     // necessary for 'static-site-generator-webpack-plugin' works
     libraryTarget: 'commonjs2'
   },

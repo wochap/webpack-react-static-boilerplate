@@ -14,7 +14,7 @@ export default webpackMerge(webpackConfigBase, {
   output: {
     publicPath: '/',
     filename: 'static/js/[name].js',
-    chunkFilename: 'static/js/chunk.[name].js'
+    chunkFilename: 'static/js/chunk.[id].[name].js'
   },
   module: {
     loaders: [
