@@ -2,6 +2,8 @@
 
 > Start your next project using technologies that you love
 
+![Demo](https://drive.google.com/uc?export=download&id=0BwM5_eez3JnoSHpORy1CNGFTZzQ)
+
 ## Features
 
 * [react](https://facebook.github.io/react/) + [react-router](https://react-router.now.sh/) + [react-hot-loader v3](https://github.com/gaearon/react-hot-loader)
@@ -17,9 +19,12 @@
 # install dependencies
 $ npm install
 
-# serve with hot reload at localhost:8000
+# serve with hot reload at localhost:8080
 $ npm run dev
 
 # build for production with minification and serve dist files at localhost:8080
 $ npm run build
+
+# copy dist folder to gh-pages branch and push it
+$ npm run deploy
 ```
