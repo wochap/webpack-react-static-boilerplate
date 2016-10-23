@@ -13,7 +13,7 @@ const postsRoutes = postsFiles.map(function (path) {
   return `/posts/${fileName}`
 })
 
-// exports routes that static-site-generator-webpack-plugin will use
+// exports routes that static-site-generator-webpack-plugin will build
 export default [
   '/',
   '/404',

@@ -15,7 +15,6 @@ import {CURRENT_IP, WEBPACK_SERVER_PORT} from './config'
 const app = express()
 
 const compiler = webpack(webpackConfigDev)
-const hotMiddleware = webpackHotMiddleware(compiler)
 const webpackMiddleware = webpackDevMiddleware(compiler, {
   publicPath: webpackConfigDev.output.publicPath,
   stats: {
@@ -23,6 +22,7 @@ const webpackMiddleware = webpackDevMiddleware(compiler, {
     chunks: false
   }
 })
+const hotMiddleware = webpackHotMiddleware(compiler)
 
 // handle fallback for HTML5 history API
 app.use(history())

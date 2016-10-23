@@ -1,5 +1,4 @@
 import path from 'path'
-import autoprefixer from 'autoprefixer'
 
 import {projectRootPath} from '../config'
 
@@ -19,7 +18,7 @@ export default {
     modulesDirectories: ['node_modules', 'shared']
   },
   resolveLoader: {
-    // register custom marked + highlight.js + front-matter loader
+    // register custom loaders
     alias: {
       'markdown-loader': path.resolve(__dirname, './custom-loaders/markdown-loader'),
       'front-matter-loader': path.resolve(__dirname, './custom-loaders/front-matter-loader')
@@ -72,6 +71,6 @@ export default {
     configFile: path.join(projectRootPath, '.eslintrc.js')
   },
   postcss: [
-    autoprefixer({browsers: ['last 2 versions']})
+    require('autoprefixer')({browsers: ['last 2 versions']})
   ]
 }

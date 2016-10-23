@@ -1,11 +1,11 @@
+import path from 'path'
 import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import BrowserSyncPlugin from 'browser-sync-webpack-plugin'
-import path from 'path'
 
 import webpackConfigBase from './config.base.babel'
-import {CURRENT_IP, WEBPACK_SERVER_PORT, BROWSER_SYNC_PORT, projectRootPath} from '../config'
+import {CURRENT_IP, WEBPACK_SERVER_PORT, BROWSER_SYNC_PORT, projectRootPath, templatePath} from '../config'
 
 const externalPath = `http://${CURRENT_IP}:${WEBPACK_SERVER_PORT}/`
 
@@ -45,7 +45,7 @@ export default webpackMerge(webpackConfigBase, {
     new webpack.HotModuleReplacementPlugin(), // enable HMR
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(projectRootPath, 'src/index.html'),
+      template: templatePath,
       inject: true
     }),
     new BrowserSyncPlugin({

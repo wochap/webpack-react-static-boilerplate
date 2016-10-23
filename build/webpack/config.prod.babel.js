@@ -1,7 +1,7 @@
+import path from 'path'
 import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import path from 'path'
 
 import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
@@ -34,7 +34,6 @@ export default webpackMerge(webpackConfigBase, {
       }
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin('static/css/[name].css'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -53,6 +52,7 @@ export default webpackMerge(webpackConfigBase, {
           module.resource.indexOf(path.join(projectRootPath, 'node_modules')) === 0
         )
       }
-    })
+    }),
+    new ExtractTextPlugin('static/css/[name].css'),
   ]
 })

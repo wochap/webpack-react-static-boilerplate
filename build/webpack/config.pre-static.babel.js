@@ -1,7 +1,7 @@
+import path from 'path'
 import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import path from 'path'
 
 import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
@@ -9,7 +9,7 @@ import {projectRootPath} from '../config'
 export default webpackMerge(webpackConfigBase, {
   // necessary for 'static-site-generator-webpack-plugin' works when split
   target: 'node',
-  devtool: 'eval',
+  devtool: false,
   entry: {
     static: path.join(projectRootPath, 'src/app/static-entry.js')
   },

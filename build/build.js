@@ -7,7 +7,7 @@ import ora from 'ora'
 import path from 'path'
 import shelljs from 'shelljs'
 
-import webpackConfigPro from './webpack/config.prod.babel'
+import webpackConfigProd from './webpack/config.prod.babel'
 import webpackConfigPreStatic from './webpack/config.pre-static.babel'
 import webpackConfigStatic from './webpack/config.static.babel'
 
@@ -42,7 +42,7 @@ webpack(webpackConfigPreStatic).run((err, stats) => {
       chunkModules: false
     }) + '\n')
 
-    webpack(webpackConfigPro).run((err, stats) => {
+    webpack(webpackConfigProd).run((err, stats) => {
       spinner.stop()
 
       if (err) throw err
