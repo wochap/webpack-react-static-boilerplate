@@ -21,7 +21,8 @@ export default {
     // register custom loaders
     alias: {
       'markdown-loader': path.resolve(__dirname, './custom-loaders/markdown-loader'),
-      'front-matter-loader': path.resolve(__dirname, './custom-loaders/front-matter-loader')
+      'front-matter-loader': path.resolve(__dirname, './custom-loaders/front-matter-loader'),
+      'bundle-loader': path.resolve(__dirname, './custom-loaders/bundle-loader')
     }
   },
   module: {

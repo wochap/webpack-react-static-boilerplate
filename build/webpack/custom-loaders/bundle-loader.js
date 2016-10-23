@@ -1,8 +1,14 @@
+/**
+ * Changes:
+ * - by default (if not query name), the chunk name will be the fileName
+ */
+
 /*
 	MIT License http://www.opensource.org/licenses/mit-license.php
 	Author Tobias Koppers @sokra
 */
 var loaderUtils = require("loader-utils");
+var path = require('path');
 
 module.exports = function() {};
 module.exports.pitch = function(remainingRequest) {
@@ -16,7 +22,7 @@ module.exports.pitch = function(remainingRequest) {
 		var chunkName = loaderUtils.interpolateName(this, query.name, options);
 		var chunkNameParam = ", " + JSON.stringify(chunkName);
 	} else {
-		var chunkNameParam = '';
+		var chunkNameParam = ", " + JSON.stringify(path.basename(remainingRequest).split('.')[0]);
 	}
 	var result;
 	if(query.lazy) {
