@@ -37,11 +37,7 @@ module.exports = function(source) {
   var meta = frontMatter(source);
   var body = marked(meta.body, options);
   var result = objectAssign({
-    frontmatter: {
-      title: null,
-      tags: null,
-      date: null
-    },
+    frontmatter: null,
     bodyHTML: null
   }, {
     frontmatter: meta.attributes
@@ -51,3 +47,28 @@ module.exports = function(source) {
 
   return 'module.exports = ' + JSON.stringify(result);
 };
+
+/*
+Input file:
+
+```md
+---
+title: Cool
+date: 2016-09-01
+---
+
+# I am a title
+```
+
+Output format:
+
+```js
+module.exports = {
+  frontmatter: {
+    date: '2016-09-01',
+    title: 'Cool'
+  },
+  bodyHTML: '<h1>I am a title</h1>'
+}
+```
+*/
