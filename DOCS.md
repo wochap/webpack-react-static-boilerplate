@@ -18,7 +18,10 @@ This boilerplate assumes you are somewhat familiar with Webpack.
 ├── yarn.lock                 # https://yarnpkg.com/en/docs/yarn-lock
 ├── src/                      # source code
 │   ├── app/
-│   │   └── main.js           # app entry file
+│   │   ├── ...
+│   │   ├── client-entry.js   # your react app entry file
+│   │   └── static-entry.js   # the static-site-generator-webpack-plugin entry file
+│   ├── posts                 # your posts files
 │   ├── styles
 │   │   └── main.scss         # main sass file
 │   ├── favicon.ico           # favicon to keep your browser from throwing a 404 during dev
