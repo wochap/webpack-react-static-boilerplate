@@ -6,12 +6,7 @@ date: 2016-09-01
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
 
 ```js
-var a = 'yeahh';
+var a = 'cool';
 
 console.log(a);
 ```
-
-<div>testing<div>
-<script>
-  window.alert('OwO');  
-</script>
