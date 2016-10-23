@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 
 function Post ({post}) {
-  if (!post) return <div>loading post...</div>
+  if (!post) return (<div>Loading post...</div>)
 
   let dangerousHTML = {
     __html: post.bodyHTML
@@ -16,7 +16,7 @@ function Post ({post}) {
 }
 
 Post.propTypes = {
-  post: PropTypes.any
+  post: React.PropTypes.any
 }
 
 export default Post

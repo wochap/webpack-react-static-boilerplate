@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
 import {Link} from 'react-router'
 
 function HomeScreen (props) {
@@ -21,7 +21,7 @@ function HomeScreen (props) {
 }
 
 HomeScreen.propTypes = {
-  posts: PropTypes.array
+  posts: React.PropTypes.array
 }
 
 export default HomeScreen

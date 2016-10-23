@@ -1,12 +1,12 @@
-import React, {Component, PropTypes} from 'react'
+import React from 'react'
 
 import asyncLoadPost from 'app/utils/asyncLoadPost'
 
 import Post from './Post'
 
-class PostScreen extends Component {
+class PostScreen extends React.Component {
   static propTypes = {
-    params: PropTypes.object.isRequired
+    params: React.PropTypes.object.isRequired
   }
 
   state = {

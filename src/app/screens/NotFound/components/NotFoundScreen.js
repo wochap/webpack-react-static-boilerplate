@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
+import React from 'react'
 
-class NotFoundScreen extends Component {
+class NotFoundScreen extends React.Component {
   render () {
     return (
       <h1>NotFoundScreen</h1>

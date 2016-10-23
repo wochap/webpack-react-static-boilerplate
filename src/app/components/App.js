@@ -1,23 +1,23 @@
-import React, {PropTypes, Component} from 'react'
+import React from 'react'
 
 import Header from './Header'
 
 import posts from 'app/utils/posts'
 
-class App extends Component {
+class App extends React.Component {
   state = {
     posts
   }
 
   static propTypes = {
-    children: PropTypes.element.isRequired
+    children: React.PropTypes.element
   }
 
   render () {
     return (
       <div>
         <Header></Header>
-        {React.cloneElement(this.props.children, {...this.state})}
+        {this.props.children ? React.cloneElement(this.props.children, {...this.state}) : null}
       </div>
     )
   }
