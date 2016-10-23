@@ -49,5 +49,5 @@ module.exports = function(source) {
     bodyHTML: body
   });
 
-  return 'module.exports = ' + JSON.stringify(result)
+  return 'module.exports = ' + JSON.stringify(result);
 };
