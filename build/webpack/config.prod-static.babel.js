@@ -32,7 +32,6 @@ export default webpackMerge(webpackConfigBase, {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new StaticSiteGeneratorPlugin('static', routes, {}, {
       window: {}
     })

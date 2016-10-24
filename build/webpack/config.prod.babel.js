@@ -14,7 +14,7 @@ export default webpackMerge(webpackConfigBase, {
   output: {
     publicPath: '/',
     filename: 'static/js/[name].js',
-    chunkFilename: 'static/js/chunk.[id].[name].js'
+    chunkFilename: 'static/js/[name].[id].chunk.js'
   },
   module: {
     loaders: [
@@ -33,13 +33,17 @@ export default webpackMerge(webpackConfigBase, {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
+    // OccurrenceOrderPlugin is needed for long-term caching to work properly
+    // see http://mxs.is/googmv
     new webpack.optimize.OccurrenceOrderPlugin(),
+    // merge all duplicate modules
     new webpack.optimize.DedupePlugin(),
+    // minify and optimize the javaScript
     new webpack.optimize.UglifyJsPlugin({
+      comments: false,
       compress: {
         warnings: false
-      },
-      comments: false
+      }
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
@@ -53,6 +57,7 @@ export default webpackMerge(webpackConfigBase, {
         )
       }
     }),
-    new ExtractTextPlugin('static/css/[name].css'),
+    // extract the CSS into a separate file
+    new ExtractTextPlugin('static/css/[name].css')
   ]
 })

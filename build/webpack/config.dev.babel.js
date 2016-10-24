@@ -22,7 +22,7 @@ export default webpackMerge(webpackConfigBase, {
   output: {
     publicPath: externalPath, // chunks works calling js from external server
     filename: '[name].js',
-    chunkFilename: 'chunk.[id].[name].js'
+    chunkFilename: '[name].[id].chunk.js'
   },
   module: {
     loaders: [
@@ -42,7 +42,7 @@ export default webpackMerge(webpackConfigBase, {
       }
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(), // enable HMR
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new HtmlWebpackPlugin({
       template: templatePath,
