@@ -1,4 +1,5 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 
 import asyncLoadPost from 'app/utils/asyncLoadPost'
 
@@ -35,8 +36,15 @@ class PostScreen extends React.Component {
   }
 
   render () {
+    if (!this.state.post) {
+      return <h1>Loading post...</h1>
+    }
+
     return (
       <div>
+        <Helmet
+          title={this.state.post.frontmatter.title}
+        />
         <Post post={this.state.post}></Post>
       </div>
     )

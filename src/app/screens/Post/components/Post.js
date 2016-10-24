@@ -1,8 +1,6 @@
 import React from 'react'
 
 function Post ({post}) {
-  if (!post) return (<div>Loading post...</div>)
-
   let dangerousHTML = {
     __html: post.bodyHTML
   }

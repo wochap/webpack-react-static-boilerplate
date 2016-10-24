@@ -1,5 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router'
+import Helmet from 'react-helmet'
 
 function HomeScreen (props) {
   const links = props.posts.map((post) => (
@@ -10,6 +11,9 @@ function HomeScreen (props) {
 
   return (
     <div>
+      <Helmet
+        title='Home'
+      />
       <h1>HomeScreen</h1>
       <nav>
         <ul>

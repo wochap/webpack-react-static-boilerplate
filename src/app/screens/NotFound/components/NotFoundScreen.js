@@ -1,9 +1,15 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 
 class NotFoundScreen extends React.Component {
   render () {
     return (
-      <h1>NotFoundScreen</h1>
+      <div>
+        <Helmet
+          title='404 NotFound'
+        />
+        <h1>NotFoundScreen</h1>
+      </div>
     )
   }
 }

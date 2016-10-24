@@ -3,6 +3,7 @@
 import ReactDOMServer from 'react-dom/server'
 import React from 'react'
 import {match, RouterContext, createMemoryHistory} from 'react-router'
+import Helmet from 'react-helmet'
 
 import routes from './config/routes'
 
@@ -20,6 +21,7 @@ export default function (locals, callback) {
     }
 
     let html = ReactDOMServer.renderToString(<RouterContext {...renderProps}/>)
+    let head = Helmet.rewind()
     let INITIAL_POST = null
 
     if (renderProps.params.slug) {
@@ -36,7 +38,8 @@ export default function (locals, callback) {
         <head>
           <meta charset="utf-8"/>
           <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          <title>{{ name }}</title>
+          ${head.title.toString()}
+          ${head.meta.toString()}
           <link rel="stylesheet" href="/static/css/app.css" />
         </head>
         <body>
