@@ -37,10 +37,10 @@ module.exports = function(source) {
   var meta = frontMatter(source);
   var body = marked(meta.body, options);
   var result = objectAssign({
-    frontmatter: null,
+    frontMatter: null,
     bodyHTML: null
   }, {
-    frontmatter: meta.attributes
+    frontMatter: meta.attributes
   }, {
     bodyHTML: body
   });
@@ -64,7 +64,7 @@ Output format:
 
 ```js
 module.exports = {
-  frontmatter: {
+  frontMatter: {
     date: '2016-09-01',
     title: 'Cool'
   },
