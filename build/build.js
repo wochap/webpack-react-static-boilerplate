@@ -9,6 +9,7 @@ import shelljs from 'shelljs'
 
 import webpackConfigProd from './webpack/config.prod.babel'
 import webpackConfigProdStatic from './webpack/config.prod-static.babel'
+import webpackConfigPreProdStatic from './webpack/config.prod-pre-static.babel'
 import {projectRootPath} from './config'
 
 let spinner = ora('Building for production...')
@@ -18,7 +19,7 @@ const distFolderPath = path.join(projectRootPath, 'dist')
 shelljs.rm('-rf', distFolderPath)
 shelljs.mkdir('-p', distFolderPath)
 
-webpack(webpackConfigProdStatic).run((err, stats) => {
+webpack(webpackConfigPreProdStatic).run((err, stats) => {
   if (err) throw err
 
   process.stdout.write(stats.toString({
@@ -29,9 +30,7 @@ webpack(webpackConfigProdStatic).run((err, stats) => {
     chunkModules: false
   }) + '\n')
 
-  webpack(webpackConfigProd).run((err, stats) => {
-    spinner.stop()
-
+  webpack(webpackConfigProdStatic).run((err, stats) => {
     if (err) throw err
 
     process.stdout.write(stats.toString({
@@ -42,6 +41,21 @@ webpack(webpackConfigProdStatic).run((err, stats) => {
       chunkModules: false
     }) + '\n')
 
-    shelljs.rm('-rf', path.join(distFolderPath, '_static'))
+    webpack(webpackConfigProd).run((err, stats) => {
+      spinner.stop()
+
+      if (err) throw err
+
+      process.stdout.write(stats.toString({
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false
+      }) + '\n')
+
+      shelljs.rm('-rf', path.join(distFolderPath, '_static'))
+      shelljs.rm('-rf', path.join(distFolderPath, 'dist'))
+    })
   })
 })

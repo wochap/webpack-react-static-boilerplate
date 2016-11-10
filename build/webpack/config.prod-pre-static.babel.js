@@ -1,15 +1,9 @@
 import path from 'path'
-import chalk from 'chalk'
 import webpack from 'webpack'
 import webpackMerge from 'webpack-merge'
 
 import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
-
-// static build magic
-import StaticSiteGeneratorPlugin from 'static-site-generator-webpack-plugin'
-import routes from '../routes'
-console.log(chalk.yellow('Routes to build: \n'), routes, '\n')
 
 export default webpackMerge(webpackConfigBase, {
   // necessary for 'static-site-generator-webpack-plugin' works with split points
@@ -20,8 +14,8 @@ export default webpackMerge(webpackConfigBase, {
   },
   output: {
     publicPath: '/',
-    filename: 'dist/_static/js/[name].js',
-    chunkFilename: 'dist/_static/js/chunk.[id].[name].js',
+    filename: '_static/js/[name].js',
+    chunkFilename: '_static/js/chunk.[id].[name].js',
     // necessary for 'static-site-generator-webpack-plugin' works with split points
     libraryTarget: 'commonjs2'
   },
@@ -30,9 +24,6 @@ export default webpackMerge(webpackConfigBase, {
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
-    }),
-    new StaticSiteGeneratorPlugin('static', routes, {}, {
-      window: {}
     })
   ]
 })
