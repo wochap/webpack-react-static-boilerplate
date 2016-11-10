@@ -7,7 +7,7 @@ import webpackConfigBase from './config.base.babel'
 import {projectRootPath} from '../config'
 
 export default webpackMerge(webpackConfigBase, {
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
     app: path.join(projectRootPath, 'src/app/client-entry.js')
   },
