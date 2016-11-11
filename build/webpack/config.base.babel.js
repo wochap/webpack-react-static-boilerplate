@@ -29,19 +29,20 @@ export default {
     preLoaders: [
       {
         test: /\.js$/,
+        include: path.join(projectRootPath, 'src'),
         loader: 'eslint-loader',
-        include: projectRootPath,
         exclude: /node_modules/
       }
     ],
     loaders: [
       {
         test: /\.js$/,
+        include: path.join(projectRootPath, 'src'),
         loader: 'babel-loader',
-        include: projectRootPath,
         exclude: /node_modules/
       }, {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        include: path.join(projectRootPath, 'src'),
         loader: 'url-loader',
         query: {
           limit: 10000,
@@ -49,6 +50,7 @@ export default {
         }
       }, {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        include: path.join(projectRootPath, 'src'),
         loader: 'url-loader',
         query: {
           limit: 10000,
@@ -56,6 +58,7 @@ export default {
         }
       }, {
         test: /\.ico$/,
+        include: path.join(projectRootPath, 'src'),
         loader: 'file-loader',
         query: {
           name: '[name].ico'
@@ -64,6 +67,7 @@ export default {
       // here we split posts in n chunks
       {
         test: /\.md$/,
+        include: path.join(projectRootPath, 'src'),
         loaders: ['bundle-loader?lazy', 'markdown-loader']
       }
     ]
