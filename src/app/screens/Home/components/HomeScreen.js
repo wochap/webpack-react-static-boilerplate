@@ -1,31 +1,34 @@
 import React from 'react'
-import {Link} from 'react-router'
-import Helmet from 'react-helmet'
+import {connect} from 'react-redux'
+import Home from './Home'
+import {getPosts} from 'app/reducers/posts'
+import {fetchPosts} from 'app/actions/posts'
 
-function HomeScreen (props) {
-  const links = props.posts.map((post) => (
-    <li key={post.slug}>
-      <Link to={`/posts/${post.slug}`}>{post.title}</Link>
-    </li>
-  ))
+class HomeScreen extends React.Component {
+  static propTypes = {
+    fetchPosts: React.PropTypes.func.isRequired,
+    posts: React.PropTypes.array
+  }
 
-  return (
-    <div>
-      <Helmet
-        title='Home'
-      />
-      <h1>HomeScreen</h1>
-      <nav>
-        <ul>
-          {links}
-        </ul>
-      </nav>
-    </div>
-  )
+  componentDidMount () {
+    this.props.fetchPosts()
+  }
+
+  render () {
+    return <Home posts={this.props.posts}/>
+  }
 }
 
-HomeScreen.propTypes = {
-  posts: React.PropTypes.array
+function mapStateToProps (state, ownProps) {
+  return {
+    posts: getPosts(state)
+  }
 }
 
-export default HomeScreen
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchPosts: () => dispatch(fetchPosts())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
