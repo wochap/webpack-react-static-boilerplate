@@ -3,33 +3,19 @@ require('src/styles/main.scss')
 
 import React from 'react'
 import {render} from 'react-dom'
-import {AppContainer} from 'react-hot-loader'
+import configureStore from './config/store/configureStore'
+import App from './components/App'
 
-import Root from './components/Root'
-
-const debug = process.env.NODE_ENV !== 'production'
+const initialState = window.__INITIAL_STATE__ || undefined
+const store = configureStore(initialState)
 const rootEl = document.getElementById('root')
 
-if (debug) {
-  render(
-    <AppContainer>
-      <Root/>
-    </AppContainer>,
-    rootEl
-  )
-} else {
-  render(<Root/>, rootEl)
-}
+render(<App store={store}/>, rootEl)
 
 if (module.hot) {
-  module.hot.accept('./components/Root', () => {
-    let NextRoot = require('./components/Root').default
+  module.hot.accept('./components/App', () => {
+    let NextApp = require('./components/App').default
 
-    render(
-      <AppContainer>
-         <NextRoot/>
-      </AppContainer>,
-      rootEl
-    )
+    render(<NextApp store={store}/>, rootEl)
   })
 }

@@ -1,56 +1,78 @@
-/* eslint-disable */
-
-import ReactDOMServer from 'react-dom/server'
 import React from 'react'
-import {match, RouterContext, createMemoryHistory} from 'react-router'
-import Helmet from 'react-helmet'
+import ReactDOM from 'react-dom/server'
 
+// Router
+import {match, RouterContext, createMemoryHistory} from 'react-router'
 import routes from './config/routes'
 
-// static-site-generator-webpack-plugin callback
+// Redux
+import {Provider} from 'react-redux'
+import configureStore from './config/store/configureStore'
+import * as PostsActions from 'app/actions/posts'
+
+import Helmet from 'react-helmet'
+import {AppContainer} from 'react-hot-loader'
+
 export default function (locals, callback) {
   const history = createMemoryHistory()
   const location = history.createLocation(locals.path)
-
-  console.log('\nCurrent path: ', locals.path)
+  const store = configureStore()
 
   match({routes, location}, (error, redirectLocation, renderProps) => {
-    if (error) {
-      console.error('react-match ERROR: ', error)
-      return
-    }
+    if (error) return
 
-    let html = ReactDOMServer.renderToString(<RouterContext {...renderProps}/>)
-    let head = Helmet.rewind()
-    let INITIAL_POST = null
-
-    if (renderProps.params.slug) {
-      // we are in post route
-      INITIAL_POST = require(`!!markdown-loader!src/posts/${renderProps.params.slug}.md`)
-      INITIAL_POST.frontmatter.slug = renderProps.params.slug
-    }
-
-    console.log('HTML generated: \n', html)
-
-    callback(null, `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-          ${head.title.toString()}
-          ${head.meta.toString()}
-          <link rel="stylesheet" href="/static/css/app.css" />
-        </head>
-        <body>
-          <div id="root">
-            ${html}
-          </div>
-          <script>window.INITIAL_POST = ${JSON.stringify(INITIAL_POST)};</script>
-          <script src="/static/js/vendor.js"></script>
-          <script src="/static/js/app.js"></script>
-        </body>
-      </html>
-    `)
+    store.dispatch(PostsActions.fetchPosts()).then(() => {
+      if (renderProps.params.slug) {
+        store.dispatch(PostsActions.fetchPost(renderProps.params.slug)).then(() => {
+          callback(null, renderFullPage(renderApp({store, renderProps})))
+        })
+      } else {
+        callback(null, renderFullPage(renderApp({store, renderProps})))
+      }
+    })
   })
+}
+
+function renderApp ({store, renderProps}) {
+  const appHTML = ReactDOM.renderToString(
+    <AppContainer>
+      <Provider store={store}>
+        <RouterContext {...renderProps}/>
+      </Provider>
+    </AppContainer>
+  )
+  const head = Helmet.rewind()
+  const initialState = store.getState()
+
+  console.log('\nCurrent path: ', renderProps.location.pathname) // eslint-disable-line
+  console.log('HTML generated: \n', appHTML) // eslint-disable-line
+
+  return {
+    appHTML,
+    head,
+    initialState
+  }
+}
+
+function renderFullPage ({appHTML, initialState, head}) {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        ${head.title.toString()}
+        ${head.meta.toString()}
+        <link rel="stylesheet" href="/static/css/app.css" />
+      </head>
+      <body>
+        <div id="root">
+          ${appHTML}
+        </div>
+        <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
+        <script src="/static/js/vendor.js"></script>
+        <script src="/static/js/app.js"></script>
+      </body>
+    </html>
+  `
 }

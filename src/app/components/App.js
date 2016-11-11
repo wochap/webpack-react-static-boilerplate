@@ -1,26 +1,21 @@
 import React from 'react'
+import {Router, browserHistory} from 'react-router'
+import {Provider} from 'react-redux'
+import {AppContainer} from 'react-hot-loader'
+import routes from 'app/config/routes'
 
-import Header from './Header'
+function App ({store}) {
+  return (
+    <AppContainer>
+      <Provider store={store}>
+        <Router history={browserHistory} routes={routes}></Router>
+      </Provider>
+    </AppContainer>
+  )
+}
 
-import posts from 'app/utils/posts'
-
-class App extends React.Component {
-  state = {
-    posts
-  }
-
-  static propTypes = {
-    children: React.PropTypes.element
-  }
-
-  render () {
-    return (
-      <div>
-        <Header></Header>
-        {this.props.children ? React.cloneElement(this.props.children, {...this.state}) : null}
-      </div>
-    )
-  }
+App.propTypes = {
+  store: React.PropTypes.object.isRequired
 }
 
 export default App
