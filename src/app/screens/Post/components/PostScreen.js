@@ -1,54 +1,33 @@
 import React from 'react'
-import Helmet from 'react-helmet'
-
-import asyncLoadPost from 'app/utils/asyncLoadPost'
-
+import {connect} from 'react-redux'
 import Post from './Post'
+import {getPost} from 'app/reducers/posts'
 
 class PostScreen extends React.Component {
   static propTypes = {
-    params: React.PropTypes.object.isRequired
+    params: React.PropTypes.object.isRequired,
+    fetchPost: React.PropTypes.func.isRequired,
+    post: React.PropTypes.object
   }
 
-  state = {
-    post: null
-  }
-
-  componentWillMount () {
-    let postSlug = this.props.params.slug
-    if (window.INITIAL_POST && window.INITIAL_POST.frontmatter.slug === postSlug) {
-      this.setState({post: window.INITIAL_POST})
-    } else {
-      this.getPost(postSlug)
-    }
+  componentDidMount () {
+    this.props.fetchPost(this.props.params.slug)
   }
 
   componentWillReceiveProps (nextProps) {
-    let postSlug = nextProps.params.slug
-    this.setState({post: null})
-    this.getPost(postSlug)
-  }
-
-  getPost = (postSlug) => {
-    asyncLoadPost(postSlug, (post) => {
-      this.setState({post})
-    })
+    this.props.fetchPost(nextProps.params.slug)
   }
 
   render () {
-    if (!this.state.post) {
-      return <h1>Loading post...</h1>
-    }
-
-    return (
-      <div>
-        <Helmet
-          title={this.state.post.frontmatter.title}
-        />
-        <Post post={this.state.post}></Post>
-      </div>
-    )
+    if (!this.props.post || !this.props.post.bodyHTML) return <h1>Loading post...</h1>
+    return <Post post={this.props.post}></Post>
   }
 }
 
-export default PostScreen
+function mapStateToProps (state, ownProps) {
+  return {
+    post: getPost(state, ownProps.params.slug)
+  }
+}
+
+export default connect(mapStateToProps)(PostScreen)
