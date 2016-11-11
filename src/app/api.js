@@ -5,23 +5,25 @@
 export function getPosts () {
   return new Promise((resolve, reject) => {
     try {
-      const postsContext = require.context('!!front-matter-loader!src/posts', true, /\.md$/)
+      require.ensure([], (require) => {
+        const postsContext = require.context('!!front-matter-loader!src/posts', true, /\.md$/)
 
-      const posts = postsContext.keys().map(function (path) {
-        // extract file name from path file
-        let fileName = (path.split('/').pop().split('.'))[0]
-        let frontMatter = postsContext(`./${fileName}.md`)
+        const posts = postsContext.keys().map(function (path) {
+          // extract file name from path file
+          let fileName = (path.split('/').pop().split('.'))[0]
+          let frontMatter = postsContext(`./${fileName}.md`)
 
-        return {
-          frontMatter: {
-            slug: fileName,
-            title: fileName.replace(/-/g, ' '),
-            ...frontMatter
+          return {
+            frontMatter: {
+              slug: fileName,
+              title: fileName.replace(/-/g, ' '),
+              ...frontMatter
+            }
           }
-        }
-      })
+        })
 
-      resolve(posts)
+        resolve(posts)
+      }, 'posts')
     } catch (error) {
       reject(error)
     }
