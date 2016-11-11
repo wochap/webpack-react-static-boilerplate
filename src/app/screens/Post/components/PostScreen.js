@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Post from './Post'
 import {getPost} from 'app/reducers/posts'
+import {fetchPost} from 'app/actions/posts'
 
 class PostScreen extends React.Component {
   static propTypes = {
@@ -20,7 +21,7 @@ class PostScreen extends React.Component {
 
   render () {
     if (!this.props.post || !this.props.post.bodyHTML) return <h1>Loading post...</h1>
-    return <Post post={this.props.post}></Post>
+    return <Post post={this.props.post}/>
   }
 }
 
@@ -30,4 +31,10 @@ function mapStateToProps (state, ownProps) {
   }
 }
 
-export default connect(mapStateToProps)(PostScreen)
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchPost: (fileName) => dispatch(fetchPost(fileName))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostScreen)
