@@ -16,7 +16,9 @@ class PostScreen extends React.Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    this.props.fetchPost(nextProps.params.slug)
+    if (this.props.params.slug !== nextProps.params.slug) {
+      this.props.fetchPost(nextProps.params.slug)
+    }
   }
 
   render () {
