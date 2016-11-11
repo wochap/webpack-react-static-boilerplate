@@ -1,15 +1,15 @@
 import * as api from 'app/api'
-import {getPost} from 'app/reducers/posts'
+import {normalize} from 'normalizr'
+import * as schema from './postSchema'
 
 export const FETCH_POST = 'posts/FETCH_POST'
 export function fetchPost (fileName) {
   return (dispatch, getState) => {
-    let postRecord = getPost(getState(), fileName)
-    if (postRecord && postRecord.bodyHTML) return
-
     return dispatch({
       type: FETCH_POST,
-      payload: api.getPost(fileName)
+      payload: api.getPost(fileName).then((post) => {
+        return normalize(post, schema.post)
+      })
     })
   }
 }
@@ -17,11 +17,11 @@ export function fetchPost (fileName) {
 export const FETCH_POSTS = 'posts/FETCH_POSTS'
 export function fetchPosts () {
   return (dispatch, getState) => {
-    if (getState().posts.length) return
-
     return dispatch({
       type: FETCH_POSTS,
-      payload: api.getPosts()
+      payload: api.getPosts().then((posts) => {
+        return normalize(posts, schema.arrayOfPosts)
+      })
     })
   }
 }

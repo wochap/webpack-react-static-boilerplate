@@ -1,27 +1,18 @@
 import * as postsActions from 'app/actions/posts'
 
-export default function posts (state = [], action) {
+export default function posts (state = {}, action) {
   switch (action.type) {
     case `${postsActions.FETCH_POST}_FULFILLED`: {
-      let postRecord = state.find((p) => p.frontMatter.slug === action.payload.frontMatter.slug)
-      let postIndex = state.indexOf(postRecord)
-
-      if (postIndex < 0) return [...state]
-
-      return [
-        ...state.slice(0, postIndex),
-        {
-          ...state[postIndex],
-          ...action.payload
-        },
-        ...state.slice(postIndex + 1)
-      ]
+      return {
+        ...state,
+        ...action.payload.entities.posts
+      }
     }
     case `${postsActions.FETCH_POSTS}_FULFILLED`: {
-      return [
-        ...state,
-        ...action.payload
-      ]
+      return {
+        ...action.payload.entities.posts,
+        ...state
+      }
     }
     default: {
       return state
@@ -30,9 +21,10 @@ export default function posts (state = [], action) {
 }
 
 export function getPost (state, postSlug) {
-  return state.posts.find((p) => p.frontMatter.slug === postSlug)
+  return Object.assign({}, state.posts[postSlug])
 }
 
 export function getPosts (state) {
-  return [...state.posts]
+  // TODO: improve code
+  return Object.values(state.posts).map(p => p)
 }
