@@ -31,8 +31,6 @@ export default webpackMerge(webpackConfigBase, {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new StaticSiteGeneratorPlugin('static', routes, {}, {
-      window: {}
-    })
+    new StaticSiteGeneratorPlugin('static', routes)
   ]
 })
