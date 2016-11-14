@@ -1,17 +1,47 @@
 import * as postsActions from 'app/actions/posts'
 
-export default function posts (state = {}, action) {
+const defaultState = {
+  data: {}
+}
+
+export default function posts (state = defaultState, action) {
   switch (action.type) {
+    case `${postsActions.FETCH_POST}_PENDING`: return state
     case `${postsActions.FETCH_POST}_FULFILLED`: {
       return {
-        ...state,
-        ...action.payload.entities.posts
+        data: {
+          ...state.data,
+          ...action.payload.entities.posts
+        },
+        isFulfilled: true
       }
     }
+    case `${postsActions.FETCH_POST}_REJECTED`: {
+      return {
+        data: {
+          ...state.data
+        },
+        isRejected: true,
+        error: action.payload
+      }
+    }
+    case `${postsActions.FETCH_POSTS}_PENDING`: return state
     case `${postsActions.FETCH_POSTS}_FULFILLED`: {
       return {
-        ...action.payload.entities.posts,
-        ...state
+        data: {
+          ...action.payload.entities.posts,
+          ...state.data
+        },
+        isFulfilled: true
+      }
+    }
+    case `${postsActions.FETCH_POSTS}_REJECTED`: {
+      return {
+        data: {
+          ...state.data
+        },
+        isRejected: true,
+        error: action.payload
       }
     }
     default: {
@@ -20,11 +50,16 @@ export default function posts (state = {}, action) {
   }
 }
 
-export function getPost (state, postSlug) {
-  return Object.assign({}, state.posts[postSlug])
+export function getPostError ({posts}) {
+  if (posts.isRejected) return posts.error
+  return false
 }
 
-export function getPosts (state) {
+export function getPost ({posts}, postSlug) {
+  return Object.assign({}, posts.data[postSlug])
+}
+
+export function getPosts ({posts}) {
   // TODO: improve code
-  return Object.values(state.posts).map(p => p)
+  return Object.values(posts.data).map(p => p)
 }

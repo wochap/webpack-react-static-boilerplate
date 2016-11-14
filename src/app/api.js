@@ -50,8 +50,8 @@ export function getPost (fileName) {
         })
       })
     } catch (error) {
-      console.warn(`Error: Cannot find '${fileName}.md' post file.`) // eslint-disable-line
-      reject(error)
+      console.warn(`Error: Can't find '${fileName}.md' post file.`) // eslint-disable-line
+      reject(`Can't find '${fileName}' post.`)
     }
   })
 }

@@ -1,15 +1,17 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Post from './Post'
+import PostError from './PostError'
 import Loading from 'components/Loading'
-import {getPost} from 'app/reducers/posts'
+import {getPost, getPostError} from 'app/reducers/posts'
 import {fetchPost} from 'app/actions/posts'
 
 class PostScreen extends React.Component {
   static propTypes = {
     params: React.PropTypes.object.isRequired,
     fetchPost: React.PropTypes.func.isRequired,
-    post: React.PropTypes.object
+    post: React.PropTypes.object,
+    postError: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.bool])
   }
 
   componentDidMount () {
@@ -23,14 +25,18 @@ class PostScreen extends React.Component {
   }
 
   render () {
-    if (!this.props.post || !this.props.post.bodyHTML) return <Loading/>
-    return <Post post={this.props.post}/>
+    const {post, postError} = this.props
+
+    if (postError) return <PostError message={postError}/>
+    if (!post || !post.bodyHTML) return <Loading/>
+    return <Post post={post}/>
   }
 }
 
 function mapStateToProps (state, ownProps) {
   return {
-    post: getPost(state, ownProps.params.slug)
+    post: getPost(state, ownProps.params.slug),
+    postError: getPostError(state)
   }
 }
 
