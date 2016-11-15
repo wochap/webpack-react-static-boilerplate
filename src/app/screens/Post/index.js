@@ -1,6 +1,8 @@
-import PostScreen from './components/PostScreen'
-
 export default {
   path: 'posts/:slug',
-  component: PostScreen
+  getComponent (location, cb) {
+    require.ensure([], () => {
+      cb(null, require('./components/PostScreen').default)
+    }, 'PostScreen')
+  }
 }

@@ -1,5 +1,7 @@
-import HomeScreen from './components/HomeScreen'
-
 export default {
-  component: HomeScreen
+  getComponent (location, cb) {
+    require.ensure([], () => {
+      cb(null, require('./components/HomeScreen').default)
+    }, 'HomeScreen')
+  }
 }
